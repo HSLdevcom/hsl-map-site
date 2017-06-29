@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
+const locale = require("locale");
 const Handlebars = require("handlebars");
 const fetch = require("node-fetch");
 const moment = require("moment");
@@ -18,6 +19,39 @@ const subwayIcon = readAsDataURL("subway.svg");
 const ferryIcon = readAsDataURL("ferry.svg");
 const busIcon = readAsDataURL("bus.svg");
 
+const texts = {
+    title: {
+        fi: "Valitse kulkuneuvo",
+        sv: "Välj färdmedel",
+        en: "Select mode of transport",
+    },
+    tram: {
+        fi: "Raitiovaunu",
+        sv: "Spårvagn",
+        en: "Tram",
+    },
+    rail: {
+        fi: "Juna",
+        sv: "Tåg",
+        en: "Rail",
+    },
+    subway: {
+        fi: "Metro",
+        sv: "Metro",
+        en: "Subway",
+    },
+    ferry: {
+        fi: "Lautta",
+        sv: "Färj",
+        en: "Ferry",
+    },
+    bus: {
+        fi: "Bussi",
+        sv: "Buss",
+        en: "Bus",
+    }
+};
+
 function getIcon(stopId) {
     switch (stopId.slice(4, 5)) {
         case "4":
@@ -33,11 +67,28 @@ function getIcon(stopId) {
     }
 }
 
+function getMode(stopId, locale) {
+    switch (stopId.slice(4, 5)) {
+        case "4":
+            return texts["tram"][locale];
+        case "5":
+            return texts["rail"][locale];
+        case "6":
+            return texts["subway"][locale];
+        case "7":
+            return texts["ferry"][locale];
+        default:
+            return texts["bus"][locale];
+    }
+}
+
 function getURL(stopId) {
     return `https://www.reittiopas.fi/pysakit/HSL:${stopId}`;
 }
 
 const app = express();
+
+app.use(locale(["fi", "sv", "en"]));
 
 app.get("/:shortId", (req, res) => {
     const shortId = `${req.params.shortId.substr(0, 1)} ${req.params.shortId.substr(1)}`;
@@ -80,11 +131,14 @@ app.get("/:shortId", (req, res) => {
                     return;
                 default:
                     const stops = stopIds.map(stopId => ({
-                        stopId,
+                        mode: getMode(stopId, req.locale),
                         src: getIcon(stopId),
                         url: getURL(stopId),
                     }));
-                    res.send(template({ stops }));
+                    res.send(template({
+                        title: texts["title"][req.locale],
+                        stops,
+                    }));
             }
         })
         .catch((error) => {

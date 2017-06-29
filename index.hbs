@@ -32,12 +32,12 @@
     </head>
 
     <body>
-        <h2>Valitse kulkuväline</h2>
+        <h2>{{title}}</h2>
         {{#each stops}}
             <div>
                 <a href="{{url}}">
                     <img class="icon" src="{{src}}" role="presentation">
-                    <div class="title">{{stopId}}</div>
+                    <div class="title">{{mode}}</div>
                     <div class="clear"></div>
                 </a>
             </div>
