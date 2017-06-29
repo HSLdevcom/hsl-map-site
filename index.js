@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const Handlebars = require("handlebars");
 const fetch = require("node-fetch");
+const moment = require("moment");
 
 const template = Handlebars.compile(fs.readFileSync("index.hbs", "utf8"));
 
@@ -40,7 +41,17 @@ const app = express();
 
 app.get("/:shortId", (req, res) => {
     const shortId = `${req.params.shortId.substr(0, 1)} ${req.params.shortId.substr(1)}`;
-    const query = `query AllStops{allStops(condition:{shortId:"${shortId}"}){nodes{stopId}}}`;
+    const query = `
+    query AllStops {
+        allStops(condition: {shortId: "${shortId}"}) {
+            nodes {
+                stopId
+                routeSegments: routeSegmentsForDate(date: "${moment().format('YYYY-MM-DD')}") {
+                    totalCount
+                }
+            }
+        }
+    }`;
 
     const options = {
         method: "POST",
@@ -57,7 +68,9 @@ app.get("/:shortId", (req, res) => {
             if (response.errors) {
                 throw new Error(JSON.stringify(response.errors));
             }
-            const stopIds = response.data.allStops.nodes.map(({ stopId }) => stopId);
+            const stopIds = response.data.allStops.nodes
+                .filter(({ routeSegments }) => routeSegments.totalCount > 0)
+                .map(({ stopId }) => stopId);
 
             switch (stopIds.length) {
                 case 0:
