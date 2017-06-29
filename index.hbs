@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>HSL</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cloud.typography.com/6364294/6653152/css/fonts.css">
+        <style>
+            body {
+                width: 90%;
+                max-width: 900px;
+                margin: 40px auto;
+                font-family: "Gotham Rounded SSm A", "Gotham Rounded SSm B", sans-serif;
+            }
+            .icon {
+                float: left;
+                height: 40px;
+                margin-right: 10px;
+                margin-bottom: 15px;
+            }
+            .title {
+                float: left;
+                font-size: 18px;
+                line-height: 40px;
+                text-decoration: none;
+            }
+            .clear {
+                clear: both;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Valitse kulkuväline</h2>
+        {{#each stops}}
+            <div>
+                <a href="{{url}}">
+                    <img class="icon" src="{{src}}" role="presentation">
+                    <div class="title">{{stopId}}</div>
+                    <div class="clear"></div>
+                </a>
+            </div>
+        {{/each}}
+    </body>
+</html>
