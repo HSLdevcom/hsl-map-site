@@ -90,6 +90,10 @@ const app = express();
 
 app.use(locale(["fi", "sv", "en"]));
 
+app.get("/", (req, res) => {
+    res.redirect(301, "https://reittiopas.fi/");
+});
+
 app.get("/:shortId", (req, res) => {
     const shortId = `${req.params.shortId.substr(0, 1)} ${req.params.shortId.substr(1)}`;
     const query = `
