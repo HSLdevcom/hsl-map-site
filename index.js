@@ -90,6 +90,27 @@ const app = express();
 
 app.use(locale(["fi", "sv", "en"]));
 
+app.use((req, res, next) => {
+    const options = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "accept": "application/json"
+        },
+        body: JSON.stringify({
+            idsite: 22,
+            rec: 1,
+            url: req.originalUrl,
+            ua: req.get("User-Agent"),
+        }),
+    }
+
+    fetch("https://piwik.digitransit.fi/piwik.php", options)
+        .catch(error => console.error(error)); // eslint-disable-line no-console
+
+    next();
+});
+
 app.get("/", (req, res) => {
     res.redirect(301, "https://reittiopas.fi/");
 });
@@ -154,4 +175,3 @@ app.get("/:shortId", (req, res) => {
 app.listen(4000, () => {
     console.log("Listening at 4000");
 });
-
