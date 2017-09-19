@@ -95,7 +95,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/:shortId", (req, res) => {
-    const shortId = `${req.params.shortId.substr(0, 1)} ${req.params.shortId.substr(1)}`;
+    const shortId = req.params.shortId.replace(/^([a-zA-Z])([0-9]+)$/, "$1 $2");
+
     const query = `
     query AllStops {
         allStops(condition: {shortId: "${shortId}"}) {
@@ -154,4 +155,3 @@ app.get("/:shortId", (req, res) => {
 app.listen(4000, () => {
     console.log("Listening at 4000");
 });
-
