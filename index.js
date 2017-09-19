@@ -5,6 +5,7 @@ const locale = require("locale");
 const Handlebars = require("handlebars");
 const fetch = require("node-fetch");
 const moment = require("moment");
+const capitalize = require("lodash/capitalize");
 
 const template = Handlebars.compile(fs.readFileSync("index.hbs", "utf8"));
 
@@ -116,7 +117,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/:shortId", (req, res) => {
-    const shortId = `${req.params.shortId.substr(0, 1)} ${req.params.shortId.substr(1)}`;
+    const shortId = capitalize(req.params.shortId.replace(/^([a-zA-Z])([0-9]+)$/, "$1 $2"));
+
     const query = `
     query AllStops {
         allStops(condition: {shortId: "${shortId}"}) {
