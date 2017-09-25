@@ -6,6 +6,7 @@ const Handlebars = require("handlebars");
 const fetch = require("node-fetch");
 const moment = require("moment");
 const capitalize = require("lodash/capitalize");
+const { stringify } = require("query-string");
 
 const template = Handlebars.compile(fs.readFileSync("index.hbs", "utf8"));
 
@@ -92,21 +93,18 @@ const app = express();
 app.use(locale(["fi", "sv", "en"]));
 
 app.use((req, res, next) => {
-    const options = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "accept": "application/json"
-        },
-        body: JSON.stringify({
-            idsite: 22,
-            rec: 1,
-            url: req.originalUrl,
-            ua: req.get("User-Agent"),
-        }),
-    }
+    const protocol = req.get("x-forwarded-proto") || req.protocol;
+    const host = req.get("x-forwarded-host") || req.get("host");
+    const directory = req.get("x-forwarded-path") || req.path;
 
-    fetch("https://piwik.digitransit.fi/piwik.php", options)
+    const params = {
+        idsite: "22",
+        rec: 1,
+        url: `${protocol}://${host}${directory}`,
+        ua: req.get("User-Agent"),
+    };
+
+    fetch(`https://piwik.digitransit.fi/piwik.php?${stringify(params)}`)
         .catch(error => console.error(error)); // eslint-disable-line no-console
 
     next();
