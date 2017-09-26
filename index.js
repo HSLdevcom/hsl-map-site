@@ -5,6 +5,7 @@ const locale = require("locale");
 const Handlebars = require("handlebars");
 const fetch = require("node-fetch");
 const moment = require("moment");
+const uuidv1 = require("uuid/v1");
 const capitalize = require("lodash/capitalize");
 const { stringify } = require("query-string");
 
@@ -98,6 +99,7 @@ app.use((req, res, next) => {
     const directory = req.get("x-forwarded-path") || req.path;
 
     const params = {
+        _id: uuidv1().replace(/-/g, "").substring(0, 16),
         idsite: "22",
         rec: 1,
         url: `${protocol}://${host}${directory}`,
