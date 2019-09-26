@@ -140,7 +140,7 @@ app.get('/:shortId', (req, res) => {
     body: JSON.stringify({ query }),
   };
 
-  fetch('http://kartat.hsl.fi/jore/graphql', options)
+  fetch('https://kartat.hsl.fi/jore/graphql', options)
     .then(response => response.json())
     .then((response) => {
       if (response.errors) {
