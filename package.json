@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "express": "^4.15.3",
-    "handlebars": "^4.0.10",
+    "handlebars": "^4.3.0",
     "locale": "^0.1.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
