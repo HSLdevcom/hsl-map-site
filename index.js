@@ -5,9 +5,7 @@ const locale = require('locale');
 const Handlebars = require('handlebars');
 const fetch = require('node-fetch');
 const moment = require('moment');
-const uuidv1 = require('uuid/v1');
 const capitalize = require('lodash/capitalize');
-const { stringify } = require('query-string');
 
 const template = Handlebars.compile(fs.readFileSync('index.hbs', 'utf8'));
 
@@ -92,25 +90,6 @@ function getURL(stopId) {
 const app = express();
 
 app.use(locale(['fi', 'sv', 'en']));
-
-app.use((req, res, next) => {
-  const protocol = req.get('x-forwarded-proto') || req.protocol;
-  const host = req.get('x-forwarded-host') || req.get('host');
-  const directory = req.get('x-forwarded-path') || req.path;
-
-  const params = {
-    _id: uuidv1().replace(/-/g, '').substring(0, 16),
-    idsite: '22',
-    rec: 1,
-    url: `${protocol}://${host}${directory}`,
-    ua: req.get('User-Agent'),
-  };
-
-  fetch(`https://piwik.digitransit.fi/piwik.php?${stringify(params)}`)
-    .catch(error => console.error(error)); // eslint-disable-line no-console
-
-  next();
-});
 
 app.get('/', (req, res) => {
   res.redirect(301, 'https://reittiopas.fi/');
