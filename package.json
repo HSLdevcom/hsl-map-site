@@ -31,7 +31,7 @@
     "locale": "^0.1.0",
     "lodash": "^4.17.19",
     "moment": "^2.18.1",
-    "node-fetch": "^1.7.1",
+    "node-fetch": "^2.6.1",
     "query-string": "^5.0.0",
     "uuid": "^3.1.0"
   }
