@@ -29,7 +29,7 @@
     "express": "^4.15.3",
     "handlebars": "^4.3.0",
     "locale": "^0.1.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.18.1",
     "node-fetch": "^1.7.1",
     "query-string": "^5.0.0",
