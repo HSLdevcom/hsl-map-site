@@ -1,13 +1,13 @@
+const express = require('express');
 const fs = require('fs');
 const path = require('path');
-const express = require('express');
-const locale = require('locale');
 const Handlebars = require('handlebars');
 const fetch = require('node-fetch');
 const moment = require('moment');
+const locale = require('locale');
 const capitalize = require('lodash/capitalize');
 
-const template = Handlebars.compile(fs.readFileSync('index.hbs', 'utf8'));
+const template = Handlebars.compile(fs.readFileSync(path.join(__dirname, 'index.hbs'), 'utf8'));
 
 function readAsDataURL(filename) {
   const base64 = fs.readFileSync(path.join(__dirname, 'icons', filename), 'base64');
@@ -87,15 +87,12 @@ function getURL(stopId) {
   return `https://www.reittiopas.fi/pysakit/HSL:${stopId}`;
 }
 
-const app = express();
+const router = express.Router();
 
-app.use(locale(['fi', 'sv', 'en']));
+router.use(locale(['fi', 'sv', 'en']));
 
-app.get('/', (req, res) => {
-  res.redirect(301, 'https://reittiopas.fi/');
-});
 
-app.get('/:shortId', (req, res) => {
+router.get('/:shortId', (req, res) => {
   const shortId = capitalize(req.params.shortId.replace(/^([a-zA-Z])([0-9]+)$/, '$1 $2'));
 
   const query = `
@@ -153,6 +150,4 @@ app.get('/:shortId', (req, res) => {
     });
 });
 
-app.listen(4000, () => {
-  console.log('Listening at 4000'); // eslint-disable-line no-console
-});
+module.exports = router;
