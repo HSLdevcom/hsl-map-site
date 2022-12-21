@@ -1,20 +1,19 @@
-FROM node:8-alpine
+FROM node:16-alpine
 
 ENV WORK /opt/mapsite
+ENV NODE_ENV production
 
 # Create app directory
 RUN mkdir -p ${WORK}
 WORKDIR ${WORK}
 
 # Install app dependencies
-COPY package.json ${WORK}
-COPY yarn.lock ${WORK}
-RUN yarn
+COPY package.json yarn.lock ${WORK}/
+
+RUN yarn && yarn cache clean
 
 # Bundle app source
 COPY . ${WORK}
-
-RUN yarn lint
 
 EXPOSE 4000
 

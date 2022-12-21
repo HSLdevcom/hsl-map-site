@@ -4,7 +4,7 @@
   "description": "HSL Map Site",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node server.js",
     "lint": "eslint ."
   },
   "repository": {
@@ -21,18 +21,16 @@
     "node": ">=8.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.18.2",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   },
   "dependencies": {
-    "express": "^4.15.3",
-    "handlebars": "^4.3.0",
+    "express": "^4.18.2",
+    "handlebars": "^4.7.7",
     "locale": "^0.1.0",
-    "lodash": "^4.17.19",
-    "moment": "^2.18.1",
-    "node-fetch": "^1.7.1",
-    "query-string": "^5.0.0",
-    "uuid": "^3.1.0"
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "node-fetch": "2"
   }
 }
