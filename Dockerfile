@@ -1,4 +1,4 @@
-FROM node:8-alpine
+FROM node:16-alpine
 
 ENV WORK /opt/mapsite
 ENV NODE_ENV production
