@@ -1,6 +1,6 @@
 {
   "name": "hsl-map-site",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HSL Map Site",
   "main": "index.js",
   "scripts": {
