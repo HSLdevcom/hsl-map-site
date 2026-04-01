@@ -1,6 +1,6 @@
 {
   "name": "hsl-map-site",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HSL Map Site",
   "main": "index.js",
   "scripts": {
@@ -32,5 +32,14 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "node-fetch": "2"
+  },
+  "resolutions": {
+    "body-parser": "1.20.3",
+    "cross-spawn": "7.0.6",
+    "flatted": "3.4.1",
+    "json5": "2.2.3",
+    "minimatch": "3.1.4",
+    "path-to-regexp": "0.1.12",
+    "semver": "6.3.1"
   }
 }
