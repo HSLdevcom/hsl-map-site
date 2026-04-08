@@ -6,12 +6,12 @@ HSL Map Site
 Install dependencies:
 
 ```
-npm install
+yarn 
 ```
 
 Start server:
 ```
-npm start
+yarn start
 ```
 
 Open [http://localhost:4000/](http://localhost:4000/)
